@@ -1,0 +1,135 @@
+#! /bin/bash
+
+meaning()
+{
+	Meaning="$( ( sqlite3 "$path2/data.db" "SELECT definition FROM entries WHERE word LIKE '$word' COLLATE NOCASE;" ) \
+                                | tr "\n" "~" |rev|cut -c 2- |rev )"
+
+        echo $Meaning > $path1/dump/word.html
+
+        sed -i 's/\.~/\.\n\n➤ /g' $path1/dump/word.html
+
+        sed -i 's/~ / /g' $path1/dump/word.html
+
+        sed -i 's/~/\.\n\n➤ /g' $path1/dump/word.html
+
+        sed -i 's/;.*/./g' $path1/dump/word.html
+
+	Meaning=$( cat $path1/dump/word.html| head -5)
+
+
+	Check=$(echo $Meaning|cut -c 1-5|tr " " ".")
+
+        if [ -z $Check ]
+          then
+
+                notify-send "Searching Meaning....."
+		sleep 0.6s
+		killall notify-osd
+		
+                word=$(echo $word |tr '[:upper:]' '[:lower:]')
+
+                curl -L -s https://en.m.wiktionary.org/wiki/"$word"> $path1/dump/word.html
+
+                sed -i 's/<ol>/`/g' $path1/dump/word.html
+
+                sed -i 's/<\/ol>/`/g' $path1/dump/word.html
+
+                Meaning="$(tr "\n" "^" < $path1/dump/word.html | cut -d "\`" -f 2 | tr "^" "\n" | grep "^<li>" \
+                                      | tr ">" "\n" | cut -d "<" -f 1  | tr "\n" " " \
+                                      | tr -s " " | tr "\`" "\n" | cut -d "." -f 1 )"
+
+                Check=$(echo $Meaning | cut -c 1-5|tr " " ".")
+
+                        if [ -z $Check ]
+                         then
+                                Meaning=" Not conneted/Not found "
+                        fi
+
+
+  		echo $Meaning > $path1/dump/word.html
+       		
+		sed -i 's/;/\n➤ /g' $path1/dump/word.html
+        	
+		Meaning=$(cat $path1/dump/word.html)
+
+        fi
+
+}
+
+
+
+synonym()
+{
+
+	Synonym="$(sqlite3 "$path2/synonym.db" "SELECT synonym FROM SynonymData WHERE entries LIKE '$word' COLLATE NOCASE;")"
+
+	Synonym="$(echo $Synonym|sed 's/#/, /g'|cut -c 2- |sed 's/`/\n/g'|head -n -1| head -2 |\
+									cut -d "," -f 2,3|tr '\n' '.')"
+
+	Check="$(echo $Synonym | cut -c 1-5|tr " " ".")"
+
+
+    if [ -z $Check ]
+
+      then
+
+
+                notify-send "Searching Synonym...."
+		sleep 0.6s
+		killall notify-osd
+                
+		curl -L -s http://www.synonym.com/synonyms/"$word" > $path1/dump/Synonym.html
+
+
+                sed -i 's/<div .*>/ /g'          $path1/dump/Synonym.html
+                sed -i 's/<\/div>/ /g'           $path1/dump/Synonym.html
+                sed -i 's/<h3 class="term">/~/g' $path1/dump/Synonym.html
+
+
+                tr "\n" "\`" < $path1/dump/Synonym.html | cut -d "~" -f 2-3 |\
+                tr "\`>~" "\n" | tr -s " "|grep "^.[A-Za-z0-9.]"|\
+                sed 's/<.*/ /g'> $path1/dump/Synonym.txt
+
+
+                tr "\n" "~" <$path1/dump/Synonym.txt|sed 's/height="0".*/Not Found/g'|tr "~" "\n" > $path1/dump/Synonym.html
+                                                     
+
+                sed -i "s/&#39;/'/g" $path1/dump/Synonym.html         #for apostrophe' bug
+
+
+        Synonym="$(tr "\n" ","<$path1/dump/Synonym.html|sed 's/Synonym.com.*/ /g'|sed 's/, ,/~/g'|sed 's/ , /\n\n/g'|\
+                   sed 's/ ,/\n/g'|sed 's/,/ /g'|sed 's/ ~/, /g'|sed 's/[02-9]./\n➤/g'|\
+                   sed 's/[1]./➤/g'|cut -d "," -f 1-2|egrep "(➤|Synonyms)" )"                                                 #Formatting
+
+        fi
+
+}
+
+
+#.........................................................................................................................#
+#.........................................................................................................................#
+#.........................................................................................................................#
+
+path1="$HOME/.lexicon"
+path2="/usr/share/lexicon"
+word=$(xsel -o)
+
+if [ "$word" ]
+ 
+  then
+	 check=$(cat $path1/dump/Auto)
+
+	       if [ "$check" = "TRUE" ]
+	         then
+	              word="$(/usr/lib/lexicon/AutoCorrect "$word")"
+	       fi
+
+
+	meaning	
+
+	synonym 
+
+notify-send "$word" "➤ $Meaning \n------------------------------------------------\nSynonyms:\n$Synonym"
+
+  fi

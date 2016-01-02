@@ -1,0 +1,31 @@
+#! /bin/bash
+
+Path="/usr/lib/lexicon"
+
+if [ ! -f "$HOME/.xbindkeysrc" ]
+   then 
+        xbindkeys -d > $HOME/.xbindkeysrc
+
+        echo "\"$Path/Lexicon\"" >> $HOME/.xbindkeysrc
+
+        echo "Control+Alt+Z" >> $HOME/.xbindkeysrc
+else
+
+check=$( grep "\"$Path/Lexicon\"$" $HOME/.xbindkeysrc )
+
+        if [ -z $check ]
+          then
+                 echo "\"$Path/Lexicon\"" >> $HOME/.xbindkeysrc
+
+                 echo "Control+Alt+Z" >> $HOME/.xbindkeysrc
+
+        fi
+fi
+
+killall -HUP xbindkeys
+
+xbindkeys
+
+notify-send "Lexicon is running"
+sleep 1.5s
+killall notify-osd

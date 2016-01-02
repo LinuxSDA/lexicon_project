@@ -1,0 +1,33 @@
+#! /bin/bash
+
+path1="$HOME/.lexicon"
+path2="/usr/share/lexicon"
+
+word="$1"
+
+> $path1/dump/checked.txt
+
+
+for ((m=1; m<=2; m++))
+do
+
+	i=`expr ${#word} - $m`
+	j=`expr ${#word} + $m`
+
+	agrep -i -$m "$word" $path2/spellcheck | egrep "^.{$i,$j}$" > $path1/dump/check.txt
+	
+grep -i "^${word:0:2}" $path1/dump/check.txt >> $path1/dump/checked.txt 
+
+	for((c=1; c<${#word}-2; c++))
+	 do
+		grep -i ".${word:$c:2}." $path1/dump/check.txt >> $path1/dump/checked.txt 
+	done
+
+grep -i "${word:${#word}-2:2}$" $path1/dump/check.txt >> $path1/dump/checked.txt 
+done
+
+	sort $path1/dump/checked.txt | uniq -c | sort -nr | tr -s " " > $path1/dump/check.txt
+
+	Str=$(cat $path1/dump/check.txt | head -1 | cut -d " " -f 2)
+	
+	grep "^ $Str" $path1/dump/check.txt | cut -d " " -f 3 | sort | head -1

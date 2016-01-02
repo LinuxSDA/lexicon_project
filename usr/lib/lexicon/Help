@@ -1,0 +1,22 @@
+#! /bin/bash
+
+Help=$(echo " The purpose of Lexicon is to provide meaning of any word anywhere. 
+
+ Just follow simple steps: 
+
+	1. Highlight a word.
+
+	2. Press Ctrl + Alt + Z.
+
+ Database has 176,000+ entries. 
+
+➤ Unfortunately, to reduce the size of the package, database chosen has only root words, not variants of it.
+
+➤ Although, AutoCorrect has been provided to closest match a word within a dictionary but it's still a Beta feature.
+
+➤ Lexicon searches the word in the offline database and goes to online mode if unable to find meaning. ")
+
+yad --title="Lexicon"\
+	--width=560 --center --no-buttons\
+	--text="$Help\n"
+

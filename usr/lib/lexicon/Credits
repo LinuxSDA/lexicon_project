@@ -1,0 +1,15 @@
+#! /bin/bash
+
+Credits=$( echo "Licenses:
+
+	Offline Dictionary Support: 	    		<a href='https://www.gutenberg.org/wiki/Gutenberg:Permission_How-To#Permission_not_needed'>Project Gutenberg</a>
+
+	Online Dictionary Support:     			<a href='https://creativecommons.org/licences/by/3.0/us/'>Creative Commons</a>
+
+	Offline and Online Synonym Support:     <a href='http://wordnet.princeton.edu/wordnet/license/'>WordNet Project</a>
+
+	Concept:		 <a href='https://play.google.com/store/apps/details?id=com.shkmishra.instadict&amp;hl=en'>Instadict</a> for Android by Shashank Mishra
+" )
+
+
+yad --title="Lexicon" --center --width=600 --no-buttons --text="$Credits"

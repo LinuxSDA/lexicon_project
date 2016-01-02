@@ -1,0 +1,21 @@
+#! /bin/bash
+
+Path1="/usr/lib/lexicon"
+Path2="$HOME/.lexicon"
+
+mkdir -p $HOME/.lexicon/dump
+
+Check=$(cat $Path2/dump/Auto)
+
+input=$( yad --form --center --width=250 --fixed\
+	   --button="Close"\
+	   --title="Lexicon"\
+	   --field="Launch:FBTN"\
+  	   --field="Help:FBTN"\
+	   --field="About:FBTN"\
+	   --field="Credits:FBTN"\
+	   --field="Use AutoCorrect(Beta):CHK"\
+           "$Path1/Launch" "$Path1/Help" "$Path1/About" "$Path1/Credits" "$Check") 
+
+echo $input|cut -d "|" -f 5 > $Path2/dump/Auto
+

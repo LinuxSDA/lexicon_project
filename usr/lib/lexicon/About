@@ -1,0 +1,13 @@
+#! /bin/bash
+
+About=$( echo "   Lexicon:	 An Instant Dictionary
+
+   Version:	 2.0
+
+   Developer:	 Sumit Dhingra
+
+   E-mail:	 	LinuxSDA@gmail.com
+
+ 	\"Inspired by <a href='https://play.google.com/store/apps/details?id=com.shkmishra.instadict&amp;hl=en'>Instadict</a> for android by my friend Shashank Mishra\"" )
+
+yad --title="Lexicon" --center --width=600 --no-buttons --text="$About"

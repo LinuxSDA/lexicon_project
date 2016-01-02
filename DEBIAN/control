@@ -1,0 +1,8 @@
+Package: lexicon
+Version: 2.0
+Section: misc
+Priority: optional
+Depends: yad, xbindkeys, xsel, sqlite3, agrep, notify-osd
+Architecture: all
+Maintainer: Sumit Dhingra <linuxSDA@gmail.com>
+Description: An Insant Dictionary
