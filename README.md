@@ -4,7 +4,7 @@ It fetches the meaning from database and pushes it through notification.
 
 */usr/bin* - has main lexicon script. The Launcher.
 
-*/usr/lib/lexicon* - has all the source code. AutoCorrect and Lexicon named scripts contains all the functioning.
+*/usr/lib/lexicon* - has all the source code. AutoCorrect and Lexicon named scripts contain all the functioning.
 
 */usr/share/lexicon* - has all the database.
 
