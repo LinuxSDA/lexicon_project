@@ -18,7 +18,7 @@ Team Lexicon has hopes that the project can grow strong as **GoldenDict** and th
 Wiktionary has good database, containing all that is required. But parsing their [Dump](http://dumps.wikimedia.org/enwiktionary/latest/enwiktionary-latest-pages-articles.xml.bz2) to a structured sqlite3 is backbreaking.    
 
   * **Autocorrect** - Better, tested, algorithm required.    
-Current auto-correct is based on little remodeling of e-grep(Wu-Manber algorithm). The Auto-Correct works but it's annoying since it always manage to find substitute for words not in dictionary, thus not allowing it to search online.    
+Current auto-correct is based on little remodeling of a-grep(Wu-Manber algorithm). The Auto-Correct works but it's annoying since it always manage to find substitute for words not in dictionary, thus not allowing it to search online.    
   
   * **Porting to different platforms** - Currently, Lexicon only support Debian. Porting to popular platforms like Fedora, RedHat, Arch, Gentoo, Slackware is required.
 
