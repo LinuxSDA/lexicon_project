@@ -22,7 +22,7 @@ check=$( grep "\"$Path/Lexicon\"$" $HOME/.xbindkeysrc )
         fi
 fi
 
-killall -HUP xbindkeys
+killall -HUP xbindkeys 2> /dev/null
 
 xbindkeys
 
