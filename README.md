@@ -2,6 +2,8 @@
 Lexicon is a native linux dictionary made for providing meaning of a word anywhere, instantly.
 It fetches the meaning from database and pushes it through notification.   
 
+![Screenshot](http://i.imgur.com/QV3wLFe.png?1)
+
 */usr/bin* - has main lexicon script. The Launcher.
 
 */usr/lib/lexicon* - has all the source code. AutoCorrect and Lexicon named scripts contain all the functioning.
