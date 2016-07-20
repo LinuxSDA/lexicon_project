@@ -24,7 +24,8 @@ Current auto-correct is based on little remodeling of a-grep(Wu-Manber algorithm
 
 ---------------------------------------------------------------------------------------------------------------
 
-Right now, we further have online translation support and faster notification push method (Not Published Online). We are hoping to integrate all the features together to big release.    
+Right now, we further have online translation support and faster notification push method ~~(Not Published Online). We are hoping to integrate all the features together to big release.~~ 
+Translation support and faster notification push method along with IPA support committed on 20/July/2016.  
 
 You can contact Project_Lexicon at LinuxSDA@gmail.com    
 
