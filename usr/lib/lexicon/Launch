@@ -26,6 +26,4 @@ killall -HUP xbindkeys
 
 xbindkeys
 
-notify-send "Lexicon is running"
-sleep 1.5s
-killall notify-osd
+notify-send -t 1000 "Lexicon is running..."

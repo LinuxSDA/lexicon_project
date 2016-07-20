@@ -23,13 +23,16 @@ meaning()
         if [ -z $Check ]
           then
 
-                notify-send "Searching Meaning....."
-		sleep 0.6s
-		killall notify-osd
+                notify-send -t 900 "Stealing Definations..."
 		
                 word=$(echo $word |tr '[:upper:]' '[:lower:]')
 
                 curl -L -s https://en.m.wiktionary.org/wiki/"$word"> $path1/dump/word.html
+
+
+		phonetic=$(grep -i "phonetic" $path1/dump/word.html|sed 's/>:/\n/g'|grep '^ '\
+					| tr '>' '\n' | grep '^/' | cut -d '<' -f 1 | head -1)
+
 
                 sed -i 's/<ol>/`/g' $path1/dump/word.html
 
@@ -37,7 +40,7 @@ meaning()
 
                 Meaning="$(tr "\n" "^" < $path1/dump/word.html | cut -d "\`" -f 2 | tr "^" "\n" | grep "^<li>" \
                                       | tr ">" "\n" | cut -d "<" -f 1  | tr "\n" " " \
-                                      | tr -s " " | tr "\`" "\n" | cut -d "." -f 1 )"
+                                      | tr -s " " | tr "\`" "\n" | cut -d "." -f 1)"
 
                 Check=$(echo $Meaning | cut -c 1-5|tr " " ".")
 
@@ -62,7 +65,7 @@ meaning()
 synonym()
 {
 
-	Synonym="$(sqlite3 "$path2/synonym.db" "SELECT synonym FROM SynonymData WHERE entries LIKE '$word' COLLATE NOCASE;")"
+       Synonym="$(sqlite3 "$path2/synonym.db" "SELECT synonym FROM SynonymData WHERE entries LIKE '$word' COLLATE NOCASE;")"
 
 	Synonym="$(echo $Synonym|sed 's/#/, /g'|cut -c 2- |sed 's/`/\n/g'|head -n -1| head -2 |\
 									cut -d "," -f 2,3|tr '\n' '.')"
@@ -73,12 +76,8 @@ synonym()
     if [ -z $Check ]
 
       then
+		notify-send -t 900 "Stealing Synonyms..."
 
-
-                notify-send "Searching Synonym...."
-		sleep 0.6s
-		killall notify-osd
-                
 		curl -L -s http://www.synonym.com/synonyms/"$word" > $path1/dump/Synonym.html
 
 
@@ -107,6 +106,36 @@ synonym()
 }
 
 
+translate()
+{
+
+	case "$check2" in
+	Arabic)		t=ar;;
+	Chinese)	t=zh-CN;;
+	French)		t=fr;;
+	German)		t=de;;
+	Hebrew)		t=iw;;
+	Hindi)		t=hi;;
+	Italian)	t=it;;
+	Japanese)	t=ja;;
+	Latin)		t=la;;
+	Portuguese)	t=pt;;
+	Russian)	t=ru;;
+	Spanish)  	t=es;;
+	*) 		t=en;;
+
+	esac
+
+#	notify-send -t 900 "Fetching Translation..."
+
+curl -L -s -i -A "" -d "sl=en" -d "tl=$t" --data-urlencode "text=$word" -d "submit=Translate"\
+						https://translate.google.com/> $path1/dump/Translate.txt
+
+Translation="$(html2text -utf8 $path1/dump/Translate.txt|tail -12|head -5|tr "\n" "~"|sed 's/.*\[File]/ /g'|cut -d "~" -f 2)"
+
+}
+
+
 #.........................................................................................................................#
 #.........................................................................................................................#
 #.........................................................................................................................#
@@ -115,21 +144,38 @@ path1="$HOME/.lexicon"
 path2="/usr/share/lexicon"
 word=$(xsel -o)
 
+safe=$word
+
 if [ "$word" ]
  
   then
-	 check=$(cat $path1/dump/Auto)
+	 check1=$(cat $path1/dump/Auto)					# Checks if autocorrect is 'Yes'
+	 check2=$(cat $path1/dump/Lang)					# Checks Translation language.
 
-	       if [ "$check" = "TRUE" ]
+	       if [ "$check1" = "Yes" ]
 	         then
-	              word="$(/usr/lib/lexicon/AutoCorrect "$word")"
-	       fi
+	              word="$(/usr/lib/lexicon/AutoCorrect "$word")"	# Empty string if word not found.
+
+	            if [ -z $word ]
+		     then
+			word=$safe					# Put original word back in, if word is empty.
+		     fi
+		fi
 
 
 	meaning	
 
 	synonym 
 
-notify-send "$word" "➤ $Meaning \n------------------------------------------------\nSynonyms:\n$Synonym"
+
+notify-send -t 6000 "$word	$phonetic" "➤ $Meaning\n--------------------------Synonyms---------------------------\n$Synonym"
+
+ Translation="None"	
+
+	if [ "$check2" != "None"  ]
+	  then
+		translate
+		notify-send -t 3000 "$check2 Translation: $Translation"
+	  fi
 
   fi
