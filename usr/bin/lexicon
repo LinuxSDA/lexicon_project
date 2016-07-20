@@ -5,17 +5,20 @@ Path2="$HOME/.lexicon"
 
 mkdir -p $HOME/.lexicon/dump
 
-Check=$(cat $Path2/dump/Auto)
+Check1=$(cat $Path2/dump/Auto)
+Check2=$(cat $Path2/dump/Lang)
 
-input=$( yad --form --center --width=250 --fixed\
+input=$( yad --form --center --columns=2\
 	   --button="Close"\
 	   --title="Lexicon"\
 	   --field="Launch:FBTN"\
   	   --field="Help:FBTN"\
+           --field="AutoCorrect(Beta):CB"\
 	   --field="About:FBTN"\
-	   --field="Credits:FBTN"\
-	   --field="Use AutoCorrect(Beta):CHK"\
-           "$Path1/Launch" "$Path1/Help" "$Path1/About" "$Path1/Credits" "$Check") 
+           --field="Credits:FBTN"\
+           --field="Translation:CB"\
+          "$Path1/Launch" "$Path1/Help" "^$Check1!Yes!No" "$Path1/About" "$Path1/Credits" "^$Check2!None!Arabic!Chinese!French!German!Hebrew!Hindi!Italian!Japanese!Latin!Portuguese!Russian!Spanish" ) 
 
-echo $input|cut -d "|" -f 5 > $Path2/dump/Auto
 
+echo $input |cut -d "|" -f 3 > $Path2/dump/Auto
+echo $input |cut -d "|" -f 6 > $Path2/dump/Lang
