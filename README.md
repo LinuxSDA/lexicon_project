@@ -1,8 +1,66 @@
 # Lexicon_Project
-Lexicon is a native linux dictionary made for providing meaning of a word anywhere, instantly.
-It fetches the meaning from database and pushes it through notification.   
 
+### Lexicon: Dictionary, anywhere
+
+Lexicon is a native linux dictionary made for providing meaning of a word anywhere, instantly.
+It fetches the meaning from database and pushes it through notification. No need to Google the word or open a dictionary.
+
+- Highlight the word.
+
+- Press ALT + CTRL + Z.    
 ![Screenshot](http://i.imgur.com/QV3wLFe.png?1)
+
+---
+
+### Features: 
+
+- Non-intrusive interface
+- Synonym support
+- Works offline
+- Online support
+- Translation support for major languages.
+- Auto-correct (beta)
+- Works everywhere on the desktop
+
+---
+### Debian Installation guide:
+
+1) Edit /etc/apt/sources.list and add the following line at the end:
+
+    deb http://insomniacprogrammer.hol.es/repo/ trusty main
+
+2) Run the following commands:
+
+    gpg --keyserver keyserver.ubuntu.com --recv-keys 793175CB
+    gpg --armor --export 793175CB | sudo apt-key add -
+    sudo apt-get update
+    sudo apt-get install lexicon
+ 
+ 3) Run:
+     lexicon
+ and click launch.
+
+For more help run:
+
+    man lexicon    
+
+**If the process complains about package yad, run:**
+
+    sudo add-apt-repository ppa:webupd8team/y-ppa-manager
+    sudo apt-get update
+    sudo apt-get install yad
+    sudo apt-get install lexicon
+
+---
+### AUR for arch users
+
+    yaourt -S lexicon-dictionary
+
+---
+
+Originally posted: [here](https://redd.it/3z1ci3) and [here](https://redd.it/3z1b0m)
+
+--------------------------------------------------------------------------------
 
 */usr/bin* - has main lexicon script. The Launcher.
 
