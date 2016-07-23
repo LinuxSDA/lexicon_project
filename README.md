@@ -28,6 +28,7 @@ It fetches the meaning from database and pushes it through notification. No need
 - Download zip and place scripts in relevent folders.
 - Install dependencies: yad, xsel, xbindkeys, sqlite3, html2text, notify-osd, agrep and Leolik notify-osd patch
 - Execute ```lexicon``` and click launch
+
 ---
 ### Debian Installation guide:  v2.0
 
