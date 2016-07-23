@@ -18,12 +18,18 @@ It fetches the meaning from database and pushes it through notification. No need
 - Synonym support
 - Works offline
 - Online support
-- Translation support for major languages.
+- Translation support for major languages. (Not in v2.0)
 - Auto-correct (beta)
-- Works everywhere on the desktop
+- Works everywhere on the desktop.
 
 ---
-### Debian Installation guide:
+### For newer version (>2.0):
+
+- Download zip and place scripts in relevent folders.
+- Install dependencies: yad, xsel, xbindkeys, sqlite3, html2text, notify-osd, agrep and Leolik notify-osd patch
+- Execute ```lexicon``` and click launch
+---
+### Debian Installation guide:  v2.0
 
 1) Edit /etc/apt/sources.list and add the following line at the end:
 
