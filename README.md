@@ -7,7 +7,9 @@ It fetches the meaning from database and pushes it through notification. No need
 
 - Highlight the word.
 
-- Press ALT + CTRL + Z.    
+- Press ALT + CTRL + Z.
+---
+
 ![Screenshot](http://i.imgur.com/QV3wLFe.png?1)
 
 ---
@@ -18,56 +20,16 @@ It fetches the meaning from database and pushes it through notification. No need
 - Synonym support
 - Works offline
 - Online support
-- Translation support for major languages. (Not in v2.0)
+- Translation support for major languages.
 - Auto-correct (beta)
 - Works everywhere on the desktop.
 
 ---
-### For newer version (>2.0):
+### How to install?:
 
 - Download zip and place scripts in relevent folders.
 - Install dependencies: yad, xsel, xbindkeys, sqlite3, html2text, notify-osd, agrep and Leolik notify-osd patch
 - Execute ```lexicon``` and click launch
-
----
-### Debian Installation guide:  v2.0
-
-1) Edit /etc/apt/sources.list and add the following line at the end:
-
-    deb http://insomniacprogrammer.hol.es/repo/ trusty main
-
-2) Run the following commands:
-
-    gpg --keyserver keyserver.ubuntu.com --recv-keys 793175CB
-    gpg --armor --export 793175CB | sudo apt-key add -
-    sudo apt-get update
-    sudo apt-get install lexicon
- 
- 3) Run:
-     lexicon
- and click launch.
-
-For more help run:
-
-    man lexicon    
-
-**If the process complains about package yad, run:**
-
-    sudo add-apt-repository ppa:webupd8team/y-ppa-manager
-    sudo apt-get update
-    sudo apt-get install yad
-    sudo apt-get install lexicon
-
----
-### AUR for arch users
-
-    yaourt -S lexicon-dictionary
-
----
-
-Originally posted: [here](https://redd.it/3z1ci3) and [here](https://redd.it/3z1b0m)
-
---------------------------------------------------------------------------------
 
 */usr/bin* - has main lexicon script. The Launcher.
 
@@ -75,25 +37,22 @@ Originally posted: [here](https://redd.it/3z1ci3) and [here](https://redd.it/3z1
 
 */usr/share/lexicon* - has all the database.
 
+---
+
+For more help run:
+
+    man lexicon    
+
+Originally posted: [here](https://redd.it/3z1ci3) and [here](https://redd.it/3z1b0m)
+
+--------------------------------------------------------------------------------
+
 For further information and installation instructions, follow [here](https://redd.it/3z1b0m) or [here](https://redd.it/3z1ci3).
 
 ------------------------------------------------------------------------------------------------------
 
-Team Lexicon has hopes that the project can grow strong as **GoldenDict** and that's why we need help of capable programmers in refining and improving following features:
+## Project has been shutdown due to lack of time and interest. Thank you for your support.
 
-  * **Combined Database** - A single database containing Meanings, Phonetics, Synonyms, Translation (Spanish, French, Italian, German).    
-Wiktionary has good database, containing all that is required. But parsing their [Dump](http://dumps.wikimedia.org/enwiktionary/latest/enwiktionary-latest-pages-articles.xml.bz2) to a structured sqlite3 is backbreaking.    
+-------------------------------------------------------------------------------------------------------  
 
-  * **Autocorrect** - Better, tested, algorithm required.    
-Current auto-correct is based on little remodeling of a-grep(Wu-Manber algorithm). The Auto-Correct works but it's annoying since it always manage to find substitute for words not in dictionary, thus not allowing it to search online.    
-  
-  * **Porting to different platforms** - Currently, Lexicon only support Debian. Porting to popular platforms like Fedora, RedHat, Arch, Gentoo, Slackware is required.
-
----------------------------------------------------------------------------------------------------------------
-
-Right now, we further have online translation support and faster notification push method ~~(Not Published Online). We are hoping to integrate all the features together to big release.~~ 
-Translation support and faster notification push method along with IPA support committed on 20/July/2016.  
-
-You can contact Project_Lexicon at LinuxSDA@gmail.com    
-
-*“It is amazing what men can accomplish if they do not care who gets the credit.” ― Harry S. Truman*
+You can contact me at LinuxSDA@gmail.com    
